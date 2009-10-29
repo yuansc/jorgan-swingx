@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<dockingPane version="1">
+    <docking x="0" y="0" width="200" height="200">
+        <slice orientation="2" weight="0.25">
+            <slice orientation="1" weight="0.5">
+                <dock>
+                    <dockable key="Package Explorer" selected="true"/>
+                </dock>
+                <dock>
+                    <dockable key="Outline" selected="true"/>
+                </dock>
+            </slice>
+            <slice orientation="3" weight="0.25">
+                <dock>
+                    <dockable key="Tasks"/>
+                    <dockable key="Console" selected="true"/>
+                </dock>
+                <bridge key="Inner"/>
+            </slice>
+        </slice>
+    </docking>
+    <docking x="542" y="146" width="233" height="161">
+        <dock>
+            <dockable key="Search" selected="true"/>
+        </dock>
+    </docking>
+</dockingPane>
