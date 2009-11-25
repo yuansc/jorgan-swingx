@@ -219,6 +219,21 @@ public class DockingPane extends JComponent {
 	}
 
 	/**
+	 * Returns all keys of contained dockables.
+	 * 
+	 * @return keys
+	 */
+	public List<Object> getDockableKeys() {
+		List<Object> keys = new ArrayList<Object>();
+
+		for (Docking docking : dockings) {
+			keys.addAll(docking.getDockableKeys());
+		}
+
+		return keys;
+	}
+
+	/**
 	 * Get a dockable that is associated with the given key.
 	 * 
 	 * @param key
