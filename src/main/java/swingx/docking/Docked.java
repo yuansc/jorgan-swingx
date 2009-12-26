@@ -2,6 +2,7 @@ package swingx.docking;
 
 import javax.swing.Action;
 import javax.swing.Icon;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JMenu;
 
@@ -17,9 +18,9 @@ public interface Docked {
 	
 	public void setContent(JComponent component);
 
-	public void addTool(Action action);
+	public JButton addTool(Action action);
 
-	public void addTool(JComponent component);
+	public JComponent addTool(JComponent component);
 
 	public void addToolSeparator();
 }

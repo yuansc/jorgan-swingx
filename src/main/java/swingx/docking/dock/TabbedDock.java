@@ -26,6 +26,7 @@ import java.util.List;
 
 import javax.swing.Action;
 import javax.swing.Icon;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -425,18 +426,27 @@ public class TabbedDock extends Dock {
 		public void setMenu(JMenu menu) {
 		}
 
-		public void addTool(Action action) {
-			toolBar.add(action).setOpaque(false);
+		public JButton addTool(Action action) {
+			JButton button = toolBar.add(action);
+			button.setOpaque(false);
+			button.setFocusable(false);
+			button.setRequestFocusEnabled(false);
 			toolBar.setVisible(true);
 
 			updateHeaderVisibility();
+			
+			return button;
 		}
 
-		public void addTool(JComponent component) {
+		public JComponent addTool(JComponent component) {
 			toolBar.add(component);
+			component.setFocusable(false);
+			component.setRequestFocusEnabled(false);
 			toolBar.setVisible(true);
 
 			updateHeaderVisibility();
+			
+			return component;
 		}
 
 		public void addToolSeparator() {
