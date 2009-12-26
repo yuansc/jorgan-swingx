@@ -23,7 +23,16 @@ import javax.swing.JComponent;
 import javax.swing.JMenu;
 
 /**
- * Convenience implementation of a dockable.
+ * Convenience implementation of a dockable, allowing configuration of content,
+ * title, icon, menu and status even if not currently docked.
+ * <br>
+ * Override {@link #addTools(Docked)} to configure required tools once docked.
+ * 
+ * @see Docked#setContent(JComponent)
+ * @see Docked#setTitle(String)
+ * @see Docked#setIcon(Icon)
+ * @see Docked#setMenu(JMenu)
+ * @see Docked#setStatus(String)
  */
 public class DefaultDockable extends AbstractDockable {
 
@@ -54,7 +63,7 @@ public class DefaultDockable extends AbstractDockable {
 
 	public void setTitle(String title) {
 		this.title = title;
-		
+
 		if (isDocked()) {
 			getDocked().setTitle(title);
 		}
