@@ -429,8 +429,12 @@ public class TabbedDock extends Dock {
 		public JButton addTool(Action action) {
 			JButton button = toolBar.add(action);
 			button.setOpaque(false);
-			button.setFocusable(false);
+			
+			// allow keyboard focus ...
+			button.setFocusable(true);
+			// ... but not on click
 			button.setRequestFocusEnabled(false);
+			
 			toolBar.setVisible(true);
 
 			updateHeaderVisibility();
@@ -440,8 +444,12 @@ public class TabbedDock extends Dock {
 
 		public JComponent addTool(JComponent component) {
 			toolBar.add(component);
-			component.setFocusable(false);
+
+			// allow keyboard focus ...
+			component.setFocusable(true);
+			// ... but not on click
 			component.setRequestFocusEnabled(false);
+			
 			toolBar.setVisible(true);
 
 			updateHeaderVisibility();
