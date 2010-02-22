@@ -54,6 +54,7 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
@@ -103,7 +104,7 @@ import swingx.docking.dock.TabbedDock;
  * @see #putComponent(Object, JComponent)
  * @see #removeComponent(Object)
  */
-public class DockingPane extends JComponent {
+public class DockingPane extends JPanel {
 
 	private static ResourceBundle resources = ResourceBundle
 			.getBundle("swingx.docking.resources");
@@ -159,6 +160,11 @@ public class DockingPane extends JComponent {
 	public void updateUI() {
 		super.updateUI();
 
+		if (dockings == null) {
+			// called from constructor
+			return;
+		}
+		
 		for (int d = 1; d < dockings.size(); d++) {
 			Docking docking = dockings.get(d);
 			JDialog dialog = dockingToDialog.get(docking);
