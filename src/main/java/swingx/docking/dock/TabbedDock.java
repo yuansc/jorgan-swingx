@@ -464,6 +464,13 @@ public class TabbedDock extends Dock {
 			updateHeaderVisibility();
 		}
 
+		public void clearTools() {
+			toolBar.removeAll();
+			toolBar.setVisible(false);
+
+			updateHeaderVisibility();
+		}
+		
 		private void updateHeaderVisibility() {
 			header.setVisible(toolBar.isVisible() || statusLabel.isVisible());
 		}

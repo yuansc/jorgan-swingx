@@ -23,4 +23,6 @@ public interface Docked {
 	public JComponent addTool(JComponent component);
 
 	public void addToolSeparator();
+	
+	public void clearTools();
 }
