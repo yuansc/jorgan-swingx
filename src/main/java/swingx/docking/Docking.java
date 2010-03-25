@@ -180,12 +180,6 @@ public class Docking extends JLayeredPane {
 		}
 	}
 
-	public void clearDockables() {
-		for (Object key : getDockableKeys()) {
-			getDock(key).removeDockable(key);
-		}
-	}
-
 	public boolean hasDockable() {
 		return hasDockable(root);
 	}

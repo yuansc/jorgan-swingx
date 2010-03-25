@@ -40,6 +40,7 @@ import javax.swing.border.EmptyBorder;
 import swingx.docking.Dock;
 import swingx.docking.Dockable;
 import swingx.docking.Docked;
+import swingx.docking.DockingPane;
 import swingx.docking.border.LineBorder;
 import swingx.docking.layout.FloatingLayout;
 
@@ -63,8 +64,11 @@ public class TabbedDock extends Dock {
 
 	/**
 	 * Constructor.
+	 * @param dockingPane 
 	 */
-	public TabbedDock() {
+	public TabbedDock(DockingPane dockingPane) {
+		super(dockingPane);
+		
 		setLayout(new BorderLayout());
 
 		tabbedPane = createTabbedPane();
@@ -96,23 +100,12 @@ public class TabbedDock extends Dock {
 	}
 
 	@Override
-	public void clearDockables() {
-		for (Tab tab : new ArrayList<Tab>(tabs)) {
-			tab.setDockable(null);
-			tab.dispose();	
-		}
-		tabs.clear();
-
-		fireDockChanged();
-	}
-
-	@Override
 	public boolean containsDockable(Object key) {
 		return getTab(key) != null;
 	}
 
 	@Override
-	public void putDockable(Object key, Dockable dockable) {
+	public Dockable putDockable(Object key, Dockable dockable) {
 		if (key == null) {
 			throw new IllegalArgumentException("key must not be null");
 		}
@@ -123,12 +116,16 @@ public class TabbedDock extends Dock {
 			tabs.add(0, tab);
 		}
 
+		Dockable old = tab.getDockable();
+		
 		tab.setDockable(dockable);
 
 		fireDockChanged();
 
 		revalidate();
 		repaint();
+		
+		return old;
 	}
 
 	@Override
@@ -224,11 +221,8 @@ public class TabbedDock extends Dock {
 					+ "'");
 		}
 
-		if (tab.close()) {
-			fireDockChanged();
-
-			revalidate();
-			repaint();
+		if (dockable.undocking()) {
+			getDockingPane().putDockable(tab.getKey(), null);
 		}
 	}
 
@@ -341,20 +335,6 @@ public class TabbedDock extends Dock {
 
 		private Object getKey() {
 			return key;
-		}
-
-		private boolean close() {
-			if (dockable == null) {
-				throw new IllegalArgumentException("dockable is null");
-			}
-
-			Dockable dockable = this.dockable;
-			if (dockable.undocking()) {
-				setDockable(null);
-				return true;
-			}
-
-			return false;
 		}
 
 		private Dockable getDockable() {

@@ -187,15 +187,11 @@ public class DockingPane extends JPanel {
 			throw new IllegalArgumentException("dockings must not be empty");
 		}
 
-		for (int d = this.dockings.size() - 1; d >= 0; d--) {
-			Docking docking = this.dockings.get(d);
-			docking.clearDockables();
-
-			if (d == 0) {
-				remove(docking);
-			}
+		for (Object key : getDockableKeys()) {
+			putDockable(key, null);
 		}
-		keys.clear();
+		
+		remove(this.dockings.get(0));
 
 		this.dockings = new ArrayList<Docking>(dockings);
 		add(dockings.get(0));
@@ -204,6 +200,8 @@ public class DockingPane extends JPanel {
 			updateVisibility(docking);
 		}
 
+		keys.clear();
+		
 		repaint();
 		revalidate();
 	}
@@ -266,7 +264,7 @@ public class DockingPane extends JPanel {
 	 * @param dockable
 	 *            dockable to put, may be <code>null</code>
 	 */
-	public void putDockable(Object key, Dockable dockable) {
+	public Dockable putDockable(Object key, Dockable dockable) {
 		if (key == null) {
 			throw new IllegalArgumentException("key must not be null");
 		}
@@ -290,12 +288,20 @@ public class DockingPane extends JPanel {
 			}
 		}
 
-		dock.putDockable(key, dockable);
+		Dockable old = dock.putDockable(key, dockable);
 		if (dockable != null) {
 			dock.setSelectedDockable(dockable);
 		}
+		
+		if (old != null) {
+			dismissDockable(old);
+		}
+		return old;
 	}
 
+	protected void dismissDockable(Dockable dockable) {
+	}
+	
 	/**
 	 * Remove the dockable that is associated with the given key.
 	 * 
@@ -320,6 +326,10 @@ public class DockingPane extends JPanel {
 		}
 
 		keys.remove(key);
+		
+		if (dockable != null) {
+			dismissDockable(dockable);
+		}
 
 		return dockable;
 	}
@@ -466,8 +476,6 @@ public class DockingPane extends JPanel {
 	public final Dock createDock() {
 		Dock dock = createDockImpl();
 
-		dock.setDockingPane(this);
-
 		JComponent initiator = dock.getDragInitiator();
 		initiator.addMouseListener(popupHandler);
 		dragSource.createDefaultDragGestureRecognizer(initiator,
@@ -496,7 +504,7 @@ public class DockingPane extends JPanel {
 	}
 
 	protected Dock createDockImpl() {
-		return new TabbedDock();
+		return new TabbedDock(this);
 	}
 
 	protected Bridge createBridgeImpl() {

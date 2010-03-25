@@ -35,17 +35,20 @@ public abstract class Dock extends JPanel {
 
 	private DockingPane dockingPane;
 
+	public Dock(DockingPane dockingPane) {
+		this.dockingPane = dockingPane;
+	}
+
+	public DockingPane getDockingPane() {
+		return dockingPane;
+	}
+	
 	/**
 	 * Return the keys of all dockables.
 	 * 
 	 * @return keys
 	 */
 	public abstract List<Object> getDockableKeys();
-
-	/**
-	 * Clear all dockables.
-	 */
-	public abstract void clearDockables();
 
 	/**
 	 * Test if this dock contains a dockable under the given key
@@ -64,7 +67,7 @@ public abstract class Dock extends JPanel {
 	 * @param dockable
 	 *            dockable to put, may be <code>null</code>
 	 */
-	public abstract void putDockable(Object key, Dockable dockable);
+	public abstract Dockable putDockable(Object key, Dockable dockable);
 
 	/**
 	 * Get the selected dockable.
@@ -128,19 +131,6 @@ public abstract class Dock extends JPanel {
 	 * @return count
 	 */
 	public abstract int getVisibleDockableCount();
-
-	/**
-	 * Set the containing dockingPane.
-	 * 
-	 * @param dockingPane
-	 *            the dockingPane
-	 */
-	public final void setDockingPane(DockingPane dockingPane) {
-		if (this.dockingPane != null) {
-			throw new Error("dockingPane already set");
-		}
-		this.dockingPane = dockingPane;
-	}
 
 	/**
 	 * Hook method to get the drag initiating component.
