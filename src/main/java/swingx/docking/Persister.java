@@ -50,6 +50,11 @@ public abstract class Persister {
      * @throws IOException
      */
     public void load() throws IOException {
+    	// make sure dockables are dismissed first
+    	for (Object key : dockingPane.getDockableKeys()) {
+    		dockingPane.putDockable(key, null);
+    	}
+    	
         dockingPane.setDockings(loadDockings());
     }
 
