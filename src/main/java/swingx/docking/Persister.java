@@ -50,11 +50,6 @@ public abstract class Persister {
      * @throws IOException
      */
     public void load() throws IOException {
-    	// make sure dockables are dismissed first
-    	for (Object key : dockingPane.getDockableKeys()) {
-    		dockingPane.putDockable(key, null);
-    	}
-    	
         dockingPane.setDockings(loadDockings());
     }
 
@@ -71,41 +66,27 @@ public abstract class Persister {
 
     protected abstract void saveDockings(List<Docking> dockings) throws IOException;
     
-    /**
-     * Resolve a {@link Dockable} on load of the <code>DockingPane</code>
-     * if it was non-null on the previous save.
-     * 
-     * @param key   key of dockable to resolve 
-     * @return      dockable or <code>null</code>
-     */
-    protected Dockable resolveDockable(Object key) {
-        return null;
+    protected final Dockable resolveDockable(Object key) {
+    	return dockingPane.createDockable(key);
     }
     
-    /**
-     * Resolve a <code>JComponent</code> on load of the <code>DockingPane</code>
-     * if it was non-null on the previous save.
-     * 
-     * @param key   key of component to resolve 
-     * @return      component or <code>null</code>
-     */
-    protected JComponent resolveComponent(Object key) {
-        return null;
+    protected final JComponent resolveComponent(Object key) {
+        return dockingPane.createComponent(key);
     }
 
-    protected Docking createDocking() {
+    protected final Docking createDocking() {
         return dockingPane.createDocking();
     }
     
-    protected Slice createSlice() {
+    protected final Slice createSlice() {
         return dockingPane.createSlice();
     }
     
-    protected Bridge createBridge() {
+    protected final Bridge createBridge() {
         return dockingPane.createBridge();
     }
 
-    protected Dock createDock() {
+    protected final Dock createDock() {
         return dockingPane.createDock();
     }
 }

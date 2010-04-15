@@ -187,8 +187,9 @@ public class DockingPane extends JPanel {
 			throw new IllegalArgumentException("dockings must not be empty");
 		}
 
+    	// make sure dockables are dismissed first
 		for (Object key : getDockableKeys()) {
-			putDockable(key, null);
+			removeDockable(key);
 		}
 		
 		remove(this.dockings.get(0));
@@ -299,7 +300,39 @@ public class DockingPane extends JPanel {
 		return old;
 	}
 
+	/**
+	 * Create a dockable for the given key.
+	 */
+	protected Dockable createDockable(Object key) {
+		return null;
+	}
+	
+	/**
+	 * Hook method to dismiss a previously created dockable.
+	 * 
+	 * @param dockable
+	 *            dockable to dismiss
+	 * @see #createDockable(Object)
+	 */
 	protected void dismissDockable(Dockable dockable) {
+	}
+	
+	/**
+	 * Create a component for the given key.
+	 */
+	protected JComponent createComponent(Object key) {
+		return null;
+	}
+	
+	/**
+	 * Hook method to dismiss a previously created component.
+	 * 
+	 * @param component
+	 *            component to dismiss
+	 * @see #createComponent(Object)
+	 */
+	protected void dismissComponent(JComponent component) {
+		
 	}
 	
 	/**
@@ -360,7 +393,7 @@ public class DockingPane extends JPanel {
 	 * @param component
 	 *            component to put, may be <code>null</code>
 	 */
-	public void putComponent(Object key, JComponent component) {
+	public JComponent putComponent(Object key, JComponent component) {
 		if (key == null) {
 			throw new IllegalArgumentException("key must not be null");
 		}
@@ -379,7 +412,13 @@ public class DockingPane extends JPanel {
 			bridge = createBridge();
 			docking.slice(docking.getRoot(), bridge);
 		}
-		bridge.setBridged(key, component);
+		
+		JComponent old = bridge.setBridged(key, component);
+		if (old != null) {
+			dismissComponent(old);
+		}
+		
+		return old;
 	}
 
 	/**
@@ -405,6 +444,9 @@ public class DockingPane extends JPanel {
 			component = bridge.clearBridged();
 		}
 
+		if (component != null) {
+			dismissComponent(component);
+		}
 		return component;
 	}
 

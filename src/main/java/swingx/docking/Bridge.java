@@ -93,13 +93,14 @@ public class Bridge extends JPanel {
 	 * @param component
 	 *            component to set, may be <code>null</code>
 	 */
-	public void setBridged(Object key, JComponent component) {
+	public JComponent setBridged(Object key, JComponent component) {
 
 		if (key == null) {
 			throw new IllegalArgumentException("key must not be null");
 		}
 		this.key = key;
 
+		JComponent old = this.bridged;
 		if (this.bridged != null) {
 			remove(this.bridged);
 		}
@@ -114,6 +115,8 @@ public class Bridge extends JPanel {
 		repaint();
 
 		fireBridgeChanged();
+		
+		return old;
 	}
 
 	/**
