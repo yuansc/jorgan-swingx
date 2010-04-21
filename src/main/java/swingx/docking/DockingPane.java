@@ -294,7 +294,7 @@ public class DockingPane extends JPanel {
 			dock.setSelectedDockable(dockable);
 		}
 		
-		if (old != null) {
+		if (old != null && old != dockable) {
 			dismissDockable(old);
 		}
 		return old;
