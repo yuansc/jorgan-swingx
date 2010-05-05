@@ -30,63 +30,71 @@ import javax.swing.JComponent;
  */
 public abstract class Persister {
 
-    /**
-     * The dockable to persist state of.
-     */
-    protected DockingPane dockingPane;
-    
-    /**
-     * Create a persister for the given <code>DockingPane</code>.
-     * 
-     * @param dockingPane   dockingPane to persist
-     */
-    public Persister(DockingPane dockingPane) {
-        this.dockingPane = dockingPane;
-    }
-    
-    /**
-     * Load the state of the <code>DockingPane</code>.
-     * 
-     * @throws IOException
-     */
-    public void load() throws IOException {
-        dockingPane.setDockings(loadDockings());
-    }
+	/**
+	 * The dockable to persist state of.
+	 */
+	protected DockingPane dockingPane;
 
-    protected abstract List<Docking> loadDockings() throws IOException;
-    
-    /**
-     * Save the state of the <code>DockingPane</code>.
-     * 
-     * @throws IOException
-     */
-    public void save() throws IOException {
-        saveDockings(dockingPane.getDockings());
-    }
+	/**
+	 * Create a persister for the given <code>DockingPane</code>.
+	 * 
+	 * @param dockingPane
+	 *            dockingPane to persist
+	 */
+	public Persister(DockingPane dockingPane) {
+		this.dockingPane = dockingPane;
+	}
 
-    protected abstract void saveDockings(List<Docking> dockings) throws IOException;
-    
-    protected final Dockable resolveDockable(Object key) {
-    	return dockingPane.createDockable(key);
-    }
-    
-    protected final JComponent resolveComponent(Object key) {
-        return dockingPane.createComponent(key);
-    }
+	/**
+	 * Load the state of the <code>DockingPane</code>.
+	 * 
+	 * @throws IOException
+	 */
+	public void load() throws IOException {
+		// make sure old dockables are already undocked and dismissed as
+		// loadDockings() might return identical instances
+		for (Object key : dockingPane.getDockableKeys()) {
+			dockingPane.removeDockable(key);
+		}
 
-    protected final Docking createDocking() {
-        return dockingPane.createDocking();
-    }
-    
-    protected final Slice createSlice() {
-        return dockingPane.createSlice();
-    }
-    
-    protected final Bridge createBridge() {
-        return dockingPane.createBridge();
-    }
+		dockingPane.setDockings(loadDockings());
+	}
 
-    protected final Dock createDock() {
-        return dockingPane.createDock();
-    }
+	protected abstract List<Docking> loadDockings() throws IOException;
+
+	/**
+	 * Save the state of the <code>DockingPane</code>.
+	 * 
+	 * @throws IOException
+	 */
+	public void save() throws IOException {
+		saveDockings(dockingPane.getDockings());
+	}
+
+	protected abstract void saveDockings(List<Docking> dockings)
+			throws IOException;
+
+	protected final Dockable resolveDockable(Object key) {
+		return dockingPane.createDockable(key);
+	}
+
+	protected final JComponent resolveComponent(Object key) {
+		return dockingPane.createComponent(key);
+	}
+
+	protected final Docking createDocking() {
+		return dockingPane.createDocking();
+	}
+
+	protected final Slice createSlice() {
+		return dockingPane.createSlice();
+	}
+
+	protected final Bridge createBridge() {
+		return dockingPane.createBridge();
+	}
+
+	protected final Dock createDock() {
+		return dockingPane.createDock();
+	}
 }

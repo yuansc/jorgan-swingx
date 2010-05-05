@@ -187,11 +187,6 @@ public class DockingPane extends JPanel {
 			throw new IllegalArgumentException("dockings must not be empty");
 		}
 
-    	// make sure dockables are dismissed first
-		for (Object key : getDockableKeys()) {
-			removeDockable(key);
-		}
-		
 		remove(this.dockings.get(0));
 
 		this.dockings = new ArrayList<Docking>(dockings);
