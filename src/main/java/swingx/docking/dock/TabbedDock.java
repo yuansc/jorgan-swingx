@@ -309,9 +309,10 @@ public class TabbedDock extends Dock {
 			header.setVisible(false);
 			add(header, BorderLayout.NORTH);
 
-			if (UIManager.getLookAndFeel().getName().indexOf("Windows") != -1) {
+			if (UIManager.getLookAndFeel().getName().toLowerCase().indexOf("windows") != -1) {
 				toolBar.setRollover(true);
 			}
+			
 			toolBar.setFloatable(false);
 			toolBar.setOpaque(false);
 			toolBar.setVisible(false);
@@ -409,6 +410,10 @@ public class TabbedDock extends Dock {
 		public JButton addTool(Action action) {
 			JButton button = toolBar.add(action);
 			button.setOpaque(false);
+			
+			if (UIManager.getLookAndFeel().getName().toLowerCase().indexOf("apple") != -1) {
+				button.putClientProperty("JButton.buttonType", "toolbar");
+			}
 			
 			// allow keyboard focus ...
 			button.setFocusable(true);
