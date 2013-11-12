@@ -513,12 +513,22 @@ public class DockingPane extends JPanel {
 	public final Dock createDock() {
 		Dock dock = createDockImpl();
 
+		initInitiator(dock);
+
+		return dock;
+	}
+
+	/**
+	 * Initialize the initiator of the given {@link Dock}.
+	 * 
+	 * @param dock
+	 * @see Dock#getDragInitiator()
+	 */
+	protected void initInitiator(Dock dock) {
 		JComponent initiator = dock.getDragInitiator();
 		initiator.addMouseListener(popupHandler);
 		dragSource.createDefaultDragGestureRecognizer(initiator,
 				DnDConstants.ACTION_MOVE, dragDropHandler);
-
-		return dock;
 	}
 
 	/**
