@@ -5,7 +5,7 @@
   <groupId>swingx</groupId>
   <artifactId>swingx</artifactId>
   <packaging>jar</packaging>
-  <version>0.7</version>
+  <version>0.7b1</version>
   <name>SwingX</name>
   <url>https://github.com/yuansc/jorgan-swingx</url>
   <description>Java Swing Extensions</description>
