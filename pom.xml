@@ -5,9 +5,9 @@
   <groupId>swingx</groupId>
   <artifactId>swingx</artifactId>
   <packaging>jar</packaging>
-  <version>0.7</version>
+  <version>0.7b1</version>
   <name>SwingX</name>
-  <url>http://swingx.sourceforge.net</url>
+  <url>https://github.com/yuansc/jorgan-swingx</url>
   <description>Java Swing Extensions</description>
 
   <licenses>
@@ -26,6 +26,14 @@
       <roles>
         <role>Project Manager</role>
         <role>Architect</role>
+        <role>Developer</role>
+      </roles>
+    </developer>         
+    <developer>
+      <id>yuansc</id>
+      <name>Scott Ling-Husing Yuan</name>
+      <email>yuansc@yahoo.com</email>
+      <roles>
         <role>Developer</role>
       </roles>
     </developer>         
@@ -102,8 +110,8 @@
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-          <source>1.5</source>
-          <target>1.5</target>
+          <source>11</source>
+          <target>11</target>
         </configuration>
       </plugin>
       <plugin>
@@ -123,6 +131,7 @@
       </plugin>
     </plugins>
   </build>   
+  <!--
   <distributionManagement>
     <repository>
       <uniqueVersion>false</uniqueVersion>
@@ -130,4 +139,5 @@
       <url>svn:https://swingx.svn.sourceforge.net/svnroot/swingx/repo</url>
     </repository>
   </distributionManagement>
+  -->
 </project>
